@@ -15,6 +15,7 @@ let ch1 = false;
 let s1 = false;
 let s2 = true;
 let s3 = false;
+let st1 = "st1_1";
 let ch3 = 0;
 let rb1 = b.propi(0);
 let slider1 = b.propi(0);
@@ -278,6 +279,31 @@ function getSliderPreview(): b.IBobrilChildren {
     ]);
 }
 
+function getStepperPreview(): b.IBobrilChildren {
+    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
+        b.withKey(m.Stepper({
+            orientation: m.StepperOrientation.horizontal,
+            steps: [
+                {
+                    children: m.Button({
+                        feature: st1 == "st1_1" ? m.Feature.Primary : m.Feature.Secondary,
+                        action: () => { st1 = "st1_1"; b.invalidate(); },
+                        children: "First Step"
+                    }),
+                },
+                {
+                    children: m.Button({
+                        feature: st1 == "st1_2" ? m.Feature.Primary : m.Feature.Secondary,
+                        action: () => { st1 = "st1_2"; b.invalidate(); },
+                        children: "Second Step"
+                    }),
+                }
+            ],
+            children: "Step Content: " + st1,
+        }), 'st1'),
+    ]);
+}
+
 function getTextFieldPreview(): b.IBobrilChildren {
     return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
         b.withKey(m.TextField({ value: str1, labelText: 'First Name' }), 'tf1'),
@@ -344,6 +370,7 @@ function createNavigation(): b.IBobrilNode {
         createNavigationItem('Paper', getPaperPreview),
         createNavigationItem('Radio Button', getRadioButtonPreview),
         createNavigationItem('Slider', getSliderPreview),
+        createNavigationItem('Stepper', getStepperPreview),
         createNavigationItem('Text Field', getTextFieldPreview),
     ]));
 }
