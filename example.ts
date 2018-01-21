@@ -15,7 +15,7 @@ let ch1 = false;
 let s1 = false;
 let s2 = true;
 let s3 = false;
-let st1 = "st1_1";
+// let st1 = "st1_1";
 let ch3 = 0;
 let rb1 = b.propi(0);
 let slider1 = b.propi(0);
@@ -279,28 +279,78 @@ function getSliderPreview(): b.IBobrilChildren {
     ]);
 }
 
+let activeStep= b.propi(0);
+
 function getStepperPreview(): b.IBobrilChildren {
-    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
+    const steps = getSteps();
+
+    function getSteps() {
+        return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+    }
+
+    function getStepContent(step:number) {
+        switch (step) {
+            case 0:
+                return 'Select campaign settings...';
+            case 1:
+                return 'What is an ad group anyways?';
+            case 2:
+                return 'This is the bit I really care about!';
+            default:
+                return 'Unknown step';
+        }
+    }
+
+    function actionButtons(){
+        return (activeStep() === steps.length) ? (
+                [
+                    {tag: "p",children: "All steps completed - you are finished"},
+                    m.Button({type: m.ButtonType.Raised,action: handleReset}, 'Reset'),
+                ]
+            ) : (
+                [
+                    {tag: "p", children: getStepContent(activeStep())},
+                    m.Button({type: m.ButtonType.Raised, action: () => activeStep(activeStep() - 1),
+                        disabled: activeStep() === 0}, 'Back'),
+
+                    isStepOptional(activeStep()) &&
+                    m.Button({type: m.ButtonType.Raised, action: handleSkip }, 'Skip'),
+
+                    m.Button({type: m.ButtonType.Raised, action: () => activeStep(activeStep() + 1),
+                            feature: m.Feature.Primary}, activeStep() === steps.length - 1 ? 'Finish' : 'Next')
+                ]
+        )
+    }
+
+    function isStepOptional(step: number) {
+        return step === 1
+    }
+
+    function handleSkip() {
+        //TODO skip
+    }
+
+    function handleReset() {
+        activeStep(0);
+    }
+    // let completed: boolean[] = [];
+    //TODO completed
+
+    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 50, backgroundColor:"#eee" } }, [
         b.withKey(m.Stepper({
             orientation: m.StepperOrientation.horizontal,
-            steps: [
-                {
-                    children: m.Button({
-                        feature: st1 == "st1_1" ? m.Feature.Primary : m.Feature.Secondary,
-                        action: () => { st1 = "st1_1"; b.invalidate(); },
-                        children: "First Step"
-                    }),
-                },
-                {
-                    children: m.Button({
-                        feature: st1 == "st1_2" ? m.Feature.Primary : m.Feature.Secondary,
-                        action: () => { st1 = "st1_2"; b.invalidate(); },
-                        children: "Second Step"
-                    }),
-                }
-            ],
-            children: "Step Content: " + st1,
+            steps:
+                steps.map((label, index) => {
+                    return ({
+                        children: [ m.Step( {
+                            key: label, children: [
+                                m.StepButton({ action: ()=> activeStep(index),index: index+1, completed: false, children: label })
+                                ]}
+                            )]
+                    });
+                })
         }), 'st1'),
+        actionButtons()
     ]);
 }
 
