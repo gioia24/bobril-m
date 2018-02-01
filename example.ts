@@ -339,15 +339,18 @@ function getStepperPreview(): b.IBobrilChildren {
     return m.Paper({ zDepth: 0, style: { margin: 16, padding: 50, backgroundColor:"#eee" } }, [
         b.withKey(m.Stepper({
             orientation: m.StepperOrientation.horizontal,
+            activeStep: activeStep(),
             steps:
-                steps.map((label, index) => {
-                    return ({
-                        children: [ m.Step( {
+                steps.map(  (label, index) => {
+                    return (
+                         m.Step( {
                             key: label, children: [
-                                m.StepButton({ action: ()=> activeStep(index),index: index+1, completed: false, children: label })
+                                // label
+                                // m.StepLabel()
+                                m.StepButton({ action: ()=> activeStep(index),index: index+1,icon: "ahoj", completed: false, children: [m.StepIcon,label] })
                                 ]}
-                            )]
-                    });
+                            )
+                    )
                 })
         }), 'st1'),
         actionButtons()
