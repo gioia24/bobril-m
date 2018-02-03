@@ -26,7 +26,7 @@ export const Stepper = b.createComponent<IStepperComponentData>({
             b.styledDiv(ctx.data.steps.map(
                 (s, index) => {
                     // s.active = ctx.data.activeStep == index;
-                    return [b.styledDiv(s.children),
+                    return [ s,
                     (index != ctx.data.steps.length-1)? m.StepConnector() : null
                     ]
                 }
