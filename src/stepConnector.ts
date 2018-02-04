@@ -3,8 +3,6 @@ import * as m from "../index";
 
 
 export interface IStepConnectorData {
-    className: String,
-    alternativeLabel: boolean,
     orientation?: m.StepperOrientation,
     children?: b.IBobrilChildren
 }
@@ -13,7 +11,7 @@ interface IStepConnectorCtx extends b.IBobrilCtx {
     data: IStepConnectorData;
 }
 
-export const StepConnector = b.createComponent<IStepConnectorData>({
+export const StepConnector = b.createVirtualComponent<IStepConnectorData>({
     render(ctx: IStepConnectorCtx, me: b.IBobrilNode) {
         me.children = [
             b.styledDiv(ctx.data.children, horizontalStepConnectorStyle)
@@ -22,8 +20,7 @@ export const StepConnector = b.createComponent<IStepConnectorData>({
 });
 
 const stepConnectorStyle = b.styleDef({
-    // padding: 0,
-    // display: 'block',
+    margin: 20,
     flex: '1 1 auto',
     borderColor: "#bdbdbd",
 });
@@ -44,7 +41,6 @@ const horizontalStepConnectorStyle = b.styleDef([
     {
         borderTopStyle: 'solid',
         borderTopWidth: 1,
-        width: "50px",//TODO
 
     }]
 );

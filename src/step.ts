@@ -22,7 +22,7 @@ interface IStepCtx extends b.IBobrilCtx {
     data: IStepData;
 }
 
-export const Step = b.createComponent<IStepData>({
+export const Step = b.createVirtualComponent<IStepData>({
     render(ctx: IStepCtx, me: b.IBobrilNode) {
         me.children = [
             b.styledDiv(ctx.data.children, stepStyle)
@@ -32,7 +32,5 @@ export const Step = b.createComponent<IStepData>({
 
 const stepStyle = b.styleDef({
     padding: 0,
-    float: "left"
-    // transition: t.easeOut(),
-    // backgroundColor: "red",
+    display: "flex",
 });
