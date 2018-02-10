@@ -1,4 +1,5 @@
 import * as b from "bobril";
+import * as styles from "./styles";
 
 export interface IStepConnectorData {
     children?: b.IBobrilChildren;
@@ -19,7 +20,7 @@ export const StepConnector = b.createVirtualComponent<IStepConnectorData>({
 const stepConnectorStyle = b.styleDef({
     margin: 20,
     flex: '1 1 auto',
-    borderColor: "#bdbdbd",
+    borderColor: styles.borderColor,
 });
 
 const horizontalStepConnectorStyle = b.styleDef([
