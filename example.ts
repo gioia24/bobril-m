@@ -280,13 +280,10 @@ function getSliderPreview(): b.IBobrilChildren {
 }
 
 let activeStep = b.propi(0);
+let completed: { [index: number]: boolean } = {};
 
 function getStepperPreview(): b.IBobrilNode {
-    const steps = getSteps();
-
-    function getSteps() {
-        return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-    }
+    const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
 
     function getStepContent(step: number) {
         switch (step) {
@@ -302,28 +299,35 @@ function getStepperPreview(): b.IBobrilNode {
     }
 
     function actionButtons() {
-        return (activeStep() === steps.length) ? (
-            [
+        return activeStep() === steps.length
+            ? [
                 { tag: "p", children: "All steps completed - you are finished" },
-                m.Button({ type: m.ButtonType.Raised, action: handleReset }, 'Reset'),
+                m.Button({
+                    type: m.ButtonType.Raised,
+                    action: handleReset
+                },
+                    'Reset'),
             ]
-        ) : (
-                [
-                    { tag: "p", children: getStepContent(activeStep()) },
-                    m.Button({
-                        type: m.ButtonType.Raised, action: () => activeStep(activeStep() - 1),
-                        disabled: activeStep() === 0
-                    }, 'Back'),
+            : [
+                { tag: "p", children: getStepContent(activeStep()) },
+                m.Button({
+                    type: m.ButtonType.Raised,
+                    action: () => activeStep(activeStep() - 1),
+                    disabled: activeStep() === 0
+                }, 'Back'),
 
-                    isStepOptional(activeStep()) &&
-                    m.Button({ type: m.ButtonType.Raised, action: handleSkip }, 'Skip'),
+                isStepOptional(activeStep()) &&
+                m.Button({ type: m.ButtonType.Raised, action: handleSkip }, 'Skip'),
 
-                    m.Button({
-                        type: m.ButtonType.Raised, action: () => activeStep(activeStep() + 1),
-                        feature: m.Feature.Primary
-                    }, activeStep() === steps.length - 1 ? 'Finish' : 'Next')
-                ]
-            )
+                m.Button({
+                    type: m.ButtonType.Raised,
+                    action: () => {
+                        completed[activeStep()] = true;
+                        activeStep(activeStep() + 1);
+                    },
+                    feature: m.Feature.Primary
+                }, activeStep() === steps.length - 1 ? 'Finish' : 'Next')
+            ]
     }
 
     function isStepOptional(step: number) {
@@ -336,28 +340,70 @@ function getStepperPreview(): b.IBobrilNode {
 
     function handleReset() {
         activeStep(0);
+        completed = {};
     }
-    // let completed: boolean[] = [];
-    //TODO completed
 
-    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
-        b.withKey(m.Stepper({
-            orientation: m.StepperOrientation.horizontal,
-            activeStep: activeStep(),
-            steps:
-                steps.map((label, index) => {
-                    return (
-                        m.Step({},
+    return [
+        m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
+            b.withKey(
+                m.Stepper({
+                    orientation: m.StepperOrientation.horizontal,
+                    activeStep: activeStep(),
+                    steps: steps.map((label, index) => {
+                        return m.Step({},
                             m.Button({
-                                action: () => activeStep(index), style: { display: "flex", textTransform: "none", verticalAlign: "middle" },
-                                children: [m.StepIcon({ index: index + 1, active: index == activeStep(), completed: index == 2 }), m.StepLabel({}, label)]
+                                action: () => activeStep(index),
+                                style: { display: "flex", textTransform: "none", verticalAlign: "middle" },
+                                children: [
+                                    m.StepLabel({
+                                        stepNumber: index + 1,
+                                        active: index == activeStep(),
+                                        completed: completed[index]
+                                    }, label)
+                                ]
                             })
                         )
-                    )
-                })
-        }), 'st1'),
-        actionButtons()
-    ]);
+                    })
+                }), 'st1'),
+            actionButtons()
+        ]),
+        m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
+            b.withKey(
+                m.Stepper({
+                    orientation: m.StepperOrientation.horizontal,
+                    activeStep: activeStep(),
+                    steps: steps.map((label, index) => {
+                        return m.Step({},
+                            m.Button({
+                                action: () => activeStep(index),
+                                style: { display: "flex", textTransform: "none", verticalAlign: "middle" },
+                                children: [
+                                    m.StepLabel({
+                                        active: index == activeStep(),
+                                        completed: completed[index],
+                                        icon: index === 1
+                                            ? icons.alertWarning({
+                                                color: index == activeStep()
+                                                    ? m.primary1Color()
+                                                    : completed[index]
+                                                        ? m.primary2Color()
+                                                        : m.disabledColor()
+                                            })
+                                            : m.StepIcon(
+                                                {
+                                                    active: index == activeStep(),
+                                                    completed: completed[index]
+                                                },
+                                                index + 1)
+                                    }, label)
+                                ]
+                            })
+                        )
+                    })
+                }), 'st1'),
+            actionButtons()
+        ])
+    ];
 }
 
 function getTextFieldPreview(): b.IBobrilChildren {
