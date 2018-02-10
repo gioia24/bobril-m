@@ -1,11 +1,7 @@
 import * as b from "bobril";
-// import * as m from "../index";
 
 interface IStepLabelData {
     children?: b.IBobrilChildren;
-    index?: number;
-    completed?: boolean;
-    active?: boolean;
 }
 
 interface IStepLabelCtx extends b.IBobrilCtx {
@@ -17,7 +13,6 @@ export const StepLabel = b.createVirtualComponent<IStepLabelData>({
         me.children = [
             b.styledDiv(ctx.data.children, stepLabelStyle)
         ];
-        b.styledDiv(me.children,stepLabelStyle)
     }
 });
 

@@ -11,9 +11,6 @@ export interface IStepperComponentData {
     orientation: StepperOrientation;
     children?: b.IBobrilChildren;
     activeStep: number;
-    // className: PropTypes.string,
-    // connector: PropTypes.element,
-    // nonLinear: PropTypes.bool,
 }
 
 interface IStepperCtx extends b.IBobrilCtx {
@@ -23,19 +20,20 @@ interface IStepperCtx extends b.IBobrilCtx {
 export const Stepper = b.createComponent<IStepperComponentData>({
     render(ctx: IStepperCtx, me: b.IBobrilNode) {
         me.children = [
-            b.styledDiv(ctx.data.steps.map(
-                (s, index) => {
-                    // s.active = ctx.data.activeStep == index;
-                    return [ s,
-                    (index != ctx.data.steps.length-1)? m.StepConnector() : null
-                    ]
-                }
-    ),//TODO dipatch index
+            b.styledDiv(
+                ctx.data.steps.map(
+                    (s, i) => {
+                        return [
+                            s,
+                            i !== ctx.data.steps.length - 1 && m.StepConnector()
+                        ]
+                    }
+                ),
                 ctx.data.orientation === StepperOrientation.horizontal
-                ? horizontalStyle
-                : ctx.data.orientation === StepperOrientation.vertical
-                    ? verticalStyle
-                    : stepperStyle),
+                    ? horizontalStyle
+                    : ctx.data.orientation === StepperOrientation.vertical
+                        ? verticalStyle
+                        : stepperStyle),
             b.styledDiv(ctx.data.children, ctx.data.orientation === StepperOrientation.horizontal
                 ? horizontalContentStyle
                 : ctx.data.orientation === StepperOrientation.vertical

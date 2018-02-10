@@ -1,21 +1,7 @@
 import * as b from "bobril";
-import * as m from "../index";
-
 
 export interface IStepData {
     children?: b.IBobrilChildren;
-    key?: String;
-
-    active?: boolean;
-    alternativeLabel?: boolean;
-    classes?: object;
-    className?: String;
-    completed?: boolean;
-    connector?: b.IBobrilChildren;
-    disabled?: boolean;
-    index?: Number;
-    last?: boolean;
-    orientation?: m.StepperOrientation,
 }
 
 interface IStepCtx extends b.IBobrilCtx {

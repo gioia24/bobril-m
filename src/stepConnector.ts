@@ -1,10 +1,7 @@
 import * as b from "bobril";
-import * as m from "../index";
-
 
 export interface IStepConnectorData {
-    orientation?: m.StepperOrientation,
-    children?: b.IBobrilChildren
+    children?: b.IBobrilChildren;
 }
 
 interface IStepConnectorCtx extends b.IBobrilCtx {
@@ -25,22 +22,10 @@ const stepConnectorStyle = b.styleDef({
     borderColor: "#bdbdbd",
 });
 
-// const verticalStepConnectorStyle = b.styleDef([
-//     stepConnectorStyle,
-//     {
-//          marginLeft: 12, // half icon
-//             // padding: `0 0 ${theme.spacing.unit}px`,
-//          borderLeftStyle: 'solid',
-//          borderLeftWidth: 1,
-//          minHeight: 24,
-//     }]
-// );
-
 const horizontalStepConnectorStyle = b.styleDef([
     stepConnectorStyle,
     {
         borderTopStyle: 'solid',
-        borderTopWidth: 1,
-
+        borderTopWidth: 1
     }]
 );
