@@ -13,18 +13,15 @@ interface IStepIconCtx extends b.IBobrilCtx {
 
 export const StepIcon = b.createVirtualComponent<IStepIconData>({
     render(ctx: IStepIconCtx, me: b.IBobrilNode) {
-        me.children = [
-            b.styledDiv(
+        me.children = b.styledDiv(
                 ctx.data.children,
-                stepIconStyle,
-                {
-                    backgroundColor: ctx.data.active
-                        ? m.primary1Color()
-                        : (ctx.data.completed
-                            ? m.primary2Color()
-                            : m.disabledColor())
-                })
-        ];
+                ctx.data.active
+                    ? activeStyle
+                    : (ctx.data.completed
+                        ? completedStyle
+                        : stepIconStyle)
+                    )
+        ;
     }
 });
 
@@ -36,5 +33,21 @@ const stepIconStyle = b.styleDef({
     fontSize: "0.75rem",
     lineHeight: "24px",
     textAlign: "center",
-    verticalAlign: "middle"
+    verticalAlign: "middle",
+    backgroundColor: m.disabledColor
 });
+
+const activeStyle = b.styleDef([
+    stepIconStyle,
+    {
+        backgroundColor: m.primary1Color
+    }
+]);
+
+const completedStyle = b.styleDef([
+    stepIconStyle,
+    {
+        backgroundColor: m.primary2Color
+    }
+]);
+
