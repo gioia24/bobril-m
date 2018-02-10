@@ -26,6 +26,7 @@ export interface IButtonData {
     feature?: Feature;
     tabindex?: number;
     icon?: b.IBobrilNode;
+    style?: b.IBobrilStyle;
 }
 
 interface IButtonCtx extends b.IBobrilCtx {
@@ -158,8 +159,9 @@ export const Button = b.createComponent<IButtonData>({
             pulse: (type < ButtonType.Floating) && ctx.focusFromKeyboard && !d.disabled,
             pointerDown: ctx.pointerDown,
             disabled: d.disabled,
-            style: [{ padding: 8, backgroundColor: showHover ? (ctx.focusFromKeyboard ? styles.keyboardFocusColor : styles.hoverColor) : undefined }]
-        }, trueChildren);
+            style: [{ padding: 8, backgroundColor: showHover ? (ctx.focusFromKeyboard ? styles.keyboardFocusColor : styles.hoverColor) : undefined },
+                ctx.data.style ]
+        }, [trueChildren,ctx.data.style]);
         b.style(me, paper.paperStyle);
         b.style(me, d.disabled ? disabledStyle : enabledStyle);
         let featD = <FeatureWithDisabled><number>(d.feature || Feature.Default);

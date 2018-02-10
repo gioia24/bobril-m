@@ -344,8 +344,8 @@ function getStepperPreview(): b.IBobrilChildren {
                 steps.map(  (label, index) => {
                     return (
                          m.Step( {},
-                                m.StepButton({ action: ()=> activeStep(index),index: index+1, completed: false,
-                                    children: [m.StepIcon({index: index+1, active: index == activeStep(), completed: false,}), m.StepLabel({}, label)] })
+                                m.Button({ action: ()=> activeStep(index), style: {display: "flex", textTransform: "none", verticalAlign: "middle"},
+                                    children: [m.StepIcon({index: index+1, active: index == activeStep(), completed: index==2}), m.StepLabel({}, label)] })
                              // [m.StepIcon({index: index+1, active: index == activeStep(), completed: false,}), m.StepLabel({}, label)]
                          )
                     )

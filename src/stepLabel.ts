@@ -22,5 +22,6 @@ export const StepLabel = b.createVirtualComponent<IStepLabelData>({
 });
 
 const stepLabelStyle = b.styleDef({
-    padding: 0,
+    padding: 5,
+    verticalAlign: "middle",
 });

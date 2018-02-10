@@ -20,7 +20,6 @@ export * from "./src/popover";
 export * from "./src/subheader";
 export * from "./src/iconButton";
 export * from "./src/step";
-export * from "./src/stepButton";
 export * from "./src/stepConnector";
 export * from "./src/stepIcon";
 export * from "./src/stepLabel";
