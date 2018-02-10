@@ -279,16 +279,16 @@ function getSliderPreview(): b.IBobrilChildren {
     ]);
 }
 
-let activeStep= b.propi(0);
+let activeStep = b.propi(0);
 
-function getStepperPreview(): b.IBobrilChildren {
+function getStepperPreview(): b.IBobrilNode {
     const steps = getSteps();
 
     function getSteps() {
         return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
     }
 
-    function getStepContent(step:number) {
+    function getStepContent(step: number) {
         switch (step) {
             case 0:
                 return 'Select campaign settings...';
@@ -301,25 +301,29 @@ function getStepperPreview(): b.IBobrilChildren {
         }
     }
 
-    function actionButtons(){
+    function actionButtons() {
         return (activeStep() === steps.length) ? (
+            [
+                { tag: "p", children: "All steps completed - you are finished" },
+                m.Button({ type: m.ButtonType.Raised, action: handleReset }, 'Reset'),
+            ]
+        ) : (
                 [
-                    {tag: "p",children: "All steps completed - you are finished"},
-                    m.Button({type: m.ButtonType.Raised,action: handleReset}, 'Reset'),
-                ]
-            ) : (
-                [
-                    {tag: "p", children: getStepContent(activeStep())},
-                    m.Button({type: m.ButtonType.Raised, action: () => activeStep(activeStep() - 1),
-                        disabled: activeStep() === 0}, 'Back'),
+                    { tag: "p", children: getStepContent(activeStep()) },
+                    m.Button({
+                        type: m.ButtonType.Raised, action: () => activeStep(activeStep() - 1),
+                        disabled: activeStep() === 0
+                    }, 'Back'),
 
                     isStepOptional(activeStep()) &&
-                    m.Button({type: m.ButtonType.Raised, action: handleSkip }, 'Skip'),
+                    m.Button({ type: m.ButtonType.Raised, action: handleSkip }, 'Skip'),
 
-                    m.Button({type: m.ButtonType.Raised, action: () => activeStep(activeStep() + 1),
-                            feature: m.Feature.Primary}, activeStep() === steps.length - 1 ? 'Finish' : 'Next')
+                    m.Button({
+                        type: m.ButtonType.Raised, action: () => activeStep(activeStep() + 1),
+                        feature: m.Feature.Primary
+                    }, activeStep() === steps.length - 1 ? 'Finish' : 'Next')
                 ]
-        )
+            )
     }
 
     function isStepOptional(step: number) {
@@ -336,18 +340,19 @@ function getStepperPreview(): b.IBobrilChildren {
     // let completed: boolean[] = [];
     //TODO completed
 
-    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 50, backgroundColor:"#eee" } }, [
+    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
         b.withKey(m.Stepper({
             orientation: m.StepperOrientation.horizontal,
             activeStep: activeStep(),
             steps:
-                steps.map(  (label, index) => {
+                steps.map((label, index) => {
                     return (
-                         m.Step( {},
-                                m.Button({ action: ()=> activeStep(index), style: {display: "flex", textTransform: "none", verticalAlign: "middle"},
-                                    children: [m.StepIcon({index: index+1, active: index == activeStep(), completed: index==2}), m.StepLabel({}, label)] })
-                             // [m.StepIcon({index: index+1, active: index == activeStep(), completed: false,}), m.StepLabel({}, label)]
-                         )
+                        m.Step({},
+                            m.Button({
+                                action: () => activeStep(index), style: { display: "flex", textTransform: "none", verticalAlign: "middle" },
+                                children: [m.StepIcon({ index: index + 1, active: index == activeStep(), completed: index == 2 }), m.StepLabel({}, label)]
+                            })
+                        )
                     )
                 })
         }), 'st1'),

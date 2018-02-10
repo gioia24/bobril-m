@@ -65,7 +65,6 @@ const stepperStyle = b.styleDef({
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'space-between',
-    backgroundColor: "white",
     padding: "25px"
 
 });
