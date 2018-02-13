@@ -15,10 +15,11 @@ export const Table = b.createComponent({
     },
     render(ctx: ITableCtx, me: b.IBobrilNode){
         console.log(ctx);
-        me.children = [ctx.data.children];
-        b.style(me, tableStyle, ctx.data.style);
+        me.children = { tag: "table", children:ctx.data.children};
+        b.style(me.children, tableStyle, ctx.data.style);
     }
 })
 const tableStyle = b.styleDef({
+    width: "100%",
 })
 
