@@ -20,3 +20,8 @@ export * from "./src/popover";
 export * from "./src/subheader";
 export * from "./src/iconButton";
 export * from "./src/stepper";
+export * from "./src/table";
+export * from "./src/tableBody";
+export * from "./src/tableCell";
+export * from "./src/tableHead";
+export * from "./src/tableRow";

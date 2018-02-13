@@ -304,6 +304,55 @@ function getStepperPreview(): b.IBobrilChildren {
     ]);
 }
 
+function getTablePreview(): b.IBobrilChildren {
+    let id = 0;
+    function createData(name:String, calories:Number, fat:Number, carbs:Number, protein:Number) {
+    id += 1;
+    return { id, name, calories, fat, carbs, protein };
+    }
+
+    const data = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    ];
+
+    return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
+        m.Table({},
+            [
+            m.TableHead({},
+                m.TableRow({},
+                [
+                    m.TableCell({},"Dessert (100g serving)"),
+                    m.TableCell({},"Calories"),
+                    m.TableCell({},"Fat (g)"),
+                    m.TableCell({},"Carbs (g)"),
+                    m.TableCell({},"Protein (g)")
+                ]
+                )
+            ),
+            m.TableBody({},
+                data.map(n => {
+                    return (
+                      m.TableRow({},
+                        [
+                            m.TableCell({}, n.name),
+                            m.TableCell({}, n.calories),
+                            m.TableCell({}, n.fat),
+                            m.TableCell({}, n.carbs),
+                            m.TableCell({}, n.protein)
+                        ]
+                        )
+                    );
+                  })
+            )
+        ]
+        )
+    ]);
+}
+
 function getTextFieldPreview(): b.IBobrilChildren {
     return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
         b.withKey(m.TextField({ value: str1, labelText: 'First Name' }), 'tf1'),
@@ -371,6 +420,7 @@ function createNavigation(): b.IBobrilNode {
         createNavigationItem('Radio Button', getRadioButtonPreview),
         createNavigationItem('Slider', getSliderPreview),
         createNavigationItem('Stepper', getStepperPreview),
+        createNavigationItem('Table', getTablePreview),
         createNavigationItem('Text Field', getTextFieldPreview),
     ]));
 }
