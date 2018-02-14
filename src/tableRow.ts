@@ -1,4 +1,6 @@
-import * as b from 'bobril'
+import * as b from 'bobril';
+// import * as styles from "./styles";
+
 
 interface ITableData {
     children: b.IBobrilChildren;
@@ -16,9 +18,14 @@ export const TableRow = b.createVirtualComponent({
     render(ctx: ITableCtx, me: b.IBobrilNode){
         console.log(ctx);
         me.children = { tag:"tr", children:ctx.data.children };
-        b.style(me, tableStyle, ctx.data.style);
+        b.style(me.children, tableStyle, ctx.data.style);
     }
 })
 const tableStyle = b.styleDef({
+    // border: '1px solid',
+    // borderColor: styles.borderColor,
+    color: 'inherit',
+    display: 'table-row',
+    height: 48,
 })
 

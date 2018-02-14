@@ -21,5 +21,8 @@ export const Table = b.createComponent({
 })
 const tableStyle = b.styleDef({
     width: "100%",
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+    overflow: 'hidden',
 })
 
