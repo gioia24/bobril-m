@@ -312,24 +312,40 @@ function getTablePreview(): b.IBobrilChildren {
     }
 
     const data = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+        createData('Eclair', 262, 16.0, 24, 6.0),
+        createData('Cupcake', 305, 3.7, 67, 4.3),
+        createData('Gingerbread', 356, 16.0, 49, 3.9),
+    ];
+    const data2 = [
+        createData('Cupcake', 305, 3.7, 67, 4.3),
+        createData('Donut', 452, 25.0, 51, 4.9),
+        createData('Eclair', 262, 16.0, 24, 6.0),
+        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+        createData('Gingerbread', 356, 16.0, 49, 3.9),
+        createData('Honeycomb', 408, 3.2, 87, 6.5),
+        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+        createData('Jelly Bean', 375, 0.0, 94, 0.0),
+        createData('KitKat', 518, 26.0, 65, 7.0),
+        createData('Lollipop', 392, 0.2, 98, 0.0),
+        createData('Marshmallow', 318, 0, 81, 2.0),
+        createData('Nougat', 360, 19.0, 9, 37.0),
+        createData('Oreo', 437, 18.0, 63, 4.0),
     ];
 
     return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
+        { tag: "h1", children: "Simple Table"},
         m.Table({},
             [
             m.TableHead({},
                 m.TableRow({},
                 [
                     m.TableCell({},"Dessert (100g serving)"),
-                    m.TableCell({},"Calories"),
-                    m.TableCell({},"Fat (g)"),
-                    m.TableCell({},"Carbs (g)"),
-                    m.TableCell({},"Protein (g)")
+                    m.TableCell({ type: m.CellType.Number },"Calories"),
+                    m.TableCell({ type: m.CellType.Number },"Fat (g)"),
+                    m.TableCell({ type: m.CellType.Number },"Carbs (g)"),
+                    m.TableCell({ type: m.CellType.Number },"Protein (g)")
                 ]
                 )
             ),
@@ -338,17 +354,48 @@ function getTablePreview(): b.IBobrilChildren {
                     return (
                       m.TableRow({},
                         [
-                            m.TableCell({}, n.name),
-                            m.TableCell({}, n.calories),
-                            m.TableCell({}, n.fat),
-                            m.TableCell({}, n.carbs),
-                            m.TableCell({}, n.protein)
+                            m.TableCell({ }, n.name),
+                            m.TableCell({ type: m.CellType.Number }, n.calories),
+                            m.TableCell({ type: m.CellType.Number }, n.fat),
+                            m.TableCell({ type: m.CellType.Number }, n.carbs),
+                            m.TableCell({ type: m.CellType.Number }, n.protein)
                         ]
                         )
                     );
                   })
-            )
-        ]
+                )
+            ]
+        ),
+        { tag: "h1", children: "Sorting & Selecting"},,
+        m.Table({},
+            [
+            m.TableHead({},
+                m.TableRow({},
+                [
+                    m.TableCell({},"Dessert (100g serving)"),
+                    m.TableCell({ type: m.CellType.Number },"Calories"),
+                    m.TableCell({ type: m.CellType.Number },"Fat (g)"),
+                    m.TableCell({ type: m.CellType.Number },"Carbs (g)"),
+                    m.TableCell({ type: m.CellType.Number },"Protein (g)")
+                ]
+                )
+            ),
+            m.TableBody({},
+                data2.map(n => {
+                    return (
+                      m.TableRow({},
+                        [
+                            m.TableCell({ }, n.name),
+                            m.TableCell({ type: m.CellType.Number }, n.calories),
+                            m.TableCell({ type: m.CellType.Number }, n.fat),
+                            m.TableCell({ type: m.CellType.Number }, n.carbs),
+                            m.TableCell({ type: m.CellType.Number }, n.protein)
+                        ]
+                        )
+                    );
+                  })
+               )
+            ]
         )
     ]);
 }
