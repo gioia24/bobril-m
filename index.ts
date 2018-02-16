@@ -24,4 +24,6 @@ export * from "./src/table";
 export * from "./src/tableBody";
 export * from "./src/tableCell";
 export * from "./src/tableHead";
+export * from "./src/tableFooter";
 export * from "./src/tableRow";
+export * from "./src/tablePagination";

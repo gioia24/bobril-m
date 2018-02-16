@@ -9,7 +9,8 @@ export const enum CellType{
 interface ITableData {
     children: b.IBobrilChildren;
     style?: b.IBobrilStyle;
-    type?: CellType
+    type?: CellType;
+    colSpan?: number;
 }
 
 interface ITableCtx extends b.BobrilCtx<ITableData> {
@@ -17,12 +18,8 @@ interface ITableCtx extends b.BobrilCtx<ITableData> {
 }
 
 export const TableCell = b.createVirtualComponent({
-    init(ctx: ITableCtx){
-        console.log("init:"+ctx);
-    },
     render(ctx: ITableCtx, me: b.IBobrilNode){
-        console.log(ctx);
-        me.children = { tag:"td", children:ctx.data.children };
+        me.children = { tag:"td",attrs: { colSpan: ctx.data.colSpan }, children:ctx.data.children, };
         b.style(me.children, tableStyle, ctx.data.style, ctx.data.type === CellType.Number && numberTypeStyle);
     }
 })

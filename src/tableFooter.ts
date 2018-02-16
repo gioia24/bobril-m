@@ -9,16 +9,13 @@ interface ITableCtx extends b.BobrilCtx<ITableData> {
     data: ITableData;
 }
 
-export const Table = b.createComponent({
+export const TableFooter = b.createVirtualComponent({
     render(ctx: ITableCtx, me: b.IBobrilNode){
-        me.children = { tag: "table", children:ctx.data.children};
+        me.children = { tag: "tfoot", children: ctx.data.children };
         b.style(me.children, tableStyle, ctx.data.style);
     }
 })
 const tableStyle = b.styleDef({
-    width: "100%",
-    borderCollapse: 'collapse',
-    borderSpacing: 0,
-    overflow: 'hidden',
+    textAlign: "right"
 })
 

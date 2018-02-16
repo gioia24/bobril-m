@@ -303,12 +303,15 @@ function getStepperPreview(): b.IBobrilChildren {
         }), 'st1'),
     ]);
 }
+let page = b.propi(0);
 
 function getTablePreview(): b.IBobrilChildren {
     let id = 0;
+    let rowsPerPage = b.propi(5);
+
     function createData(name:String, calories:Number, fat:Number, carbs:Number, protein:Number) {
-    id += 1;
-    return { id, name, calories, fat, carbs, protein };
+        id += 1;
+        return { id, name, calories, fat, carbs, protein };
     }
 
     const data = [
@@ -366,7 +369,7 @@ function getTablePreview(): b.IBobrilChildren {
                 )
             ]
         ),
-        { tag: "h1", children: "Sorting & Selecting"},,
+        { tag: "h1", children: "Sorting & Selecting"},
         m.Table({},
             [
             m.TableHead({},
@@ -381,7 +384,7 @@ function getTablePreview(): b.IBobrilChildren {
                 )
             ),
             m.TableBody({},
-                data2.map(n => {
+                data2.slice(page() * rowsPerPage(), page() * rowsPerPage() + rowsPerPage()).map(n => {
                     return (
                       m.TableRow({},
                         [
@@ -394,11 +397,34 @@ function getTablePreview(): b.IBobrilChildren {
                         )
                     );
                   })
+            ),
+            m.TableFooter({},
+                m.TableRow({}, 
+                m.TablePagination({ 
+                    count: data2.length,
+                    rowsPerPage: rowsPerPage(), 
+                    page: page,
+                    colnextSpan: 6,
+                 }))
                )
             ]
         )
     ]);
 }
+
+// <TableFooter>
+//               <TableRow>
+//                 <TablePagination
+//                   colSpan={3}
+//                   count={data.length}
+//                   rowsPerPage={rowsPerPage}
+//                   page={page}
+//                   onChangePage={this.handleChangePage}
+//                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
+//                   Actions={TablePaginationActionsWrapped}
+//                 />
+//               </TableRow>
+//             </TableFooter>
 
 function getTextFieldPreview(): b.IBobrilChildren {
     return m.Paper({ zDepth: 0, style: { margin: 16, padding: 8 } }, [
