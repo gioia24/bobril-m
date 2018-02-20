@@ -352,6 +352,31 @@ function createNavigationItem(text: string, contentCallback: () => b.IBobrilChil
     });
 }
 
+function getAppBarPreview(): b.IBobrilNode {
+    return [
+        m.Paper({ style: { margin: 16, padding: 8, position: "relative" } }, [
+            m.AppBar({
+                position: m.AppBarPosition.fixed,
+                children: b.styledDiv("Fixed"),
+                feature: m.Feature.Primary
+            }),
+        ]),
+        m.Paper({ style: { margin: 16, padding: 8, position: "relative" } }, [
+            m.AppBar({
+                position: m.AppBarPosition.static,
+                children: b.styledDiv("Static"),
+                feature: m.Feature.Secondary
+            }),
+        ]),
+        m.Paper({ style: { margin: 16, padding: 8, position: "relative" } }, [
+            m.AppBar({
+                children: b.styledDiv("Absolute"),
+                position: m.AppBarPosition.absolute
+            })
+        ])
+    ]
+}
+
 function createNavigation(): b.IBobrilNode {
     return m.Paper({
         zDepth: 3,
@@ -362,6 +387,7 @@ function createNavigation(): b.IBobrilNode {
             width: navigationWidth
         }
     }, m.List({}, [
+        createNavigationItem('App Bar', getAppBarPreview),
         createNavigationItem('Badge', getBadgePreview),
         createNavigationItem('Button', getButtonPreview),
         createNavigationItem('Checkbox', getCheckboxPreview),

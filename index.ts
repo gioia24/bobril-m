@@ -1,3 +1,4 @@
+export * from "./src/appBar";
 export * from "./src/colors";
 export * from "./src/colorUtils";
 export * from "./src/styles";
